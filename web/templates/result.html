@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wojak - Wojak Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-grin-alt"></i>
+                Your Wojak is Ready!
+            </h1>
+            <p class="subtitle">Your transformation is complete</p>
+        </header>
+
+        <main class="main-content">
+            <div class="result-page-container">
+                <div class="result-image-large">
+                    <img id="resultImageLarge" alt="Generated Wojak" src="">
+                </div>
+                
+                <div class="result-actions-large">
+                    <button class="btn btn-primary btn-large" id="downloadLargeBtn">
+                        <i class="fas fa-download"></i>
+                        Download High Quality
+                    </button>
+                    
+                    <div class="action-row">
+                        <button class="btn btn-secondary" id="backToGeneratorBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Generator
+                        </button>
+                        <button class="btn btn-secondary" id="shareResultBtn">
+                            <i class="fas fa-share-alt"></i>
+                            Share Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Wojak Generator. Made with ❤️ for meme enthusiasts.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get result from URL parameters or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const resultImage = urlParams.get('image') || localStorage.getItem('wojakResult');
+        const downloadId = urlParams.get('download') || localStorage.getItem('wojakDownloadId');
+
+        if (resultImage) {
+            document.getElementById('resultImageLarge').src = resultImage;
+        } else {
+            // Redirect back to main page if no result
+            window.location.href = '/';
+        }
+
+        // Download button
+        document.getElementById('downloadLargeBtn').addEventListener('click', function() {
+            if (downloadId) {
+                window.open(`/api/download/${downloadId}`, '_blank');
+            }
+        });
+
+        // Back to generator
+        document.getElementById('backToGeneratorBtn').addEventListener('click', function() {
+            window.location.href = '/';
+        });
+
+        // Share button
+        document.getElementById('shareResultBtn').addEventListener('click', function() {
+            if (navigator.share && resultImage) {
+                navigator.share({
+                    title: 'Check out my Wojak!',
+                    text: 'I just created this awesome Wojak meme!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy URL to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied to clipboard!');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

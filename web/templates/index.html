@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wojak Generator - Turn Your Face into a Meme</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-grin-alt"></i>
+                Wojak Generator
+            </h1>
+            <p class="subtitle">Transform your face into a custom Wojak meme</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Step 1: Upload -->
+            <section class="upload-section" id="uploadSection">
+                <div class="step-header">
+                    <span class="step-number">1</span>
+                    <h2>Upload Your Photo</h2>
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-prompt">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <p class="upload-text">
+                            Drag and drop your photo here or 
+                            <span class="upload-link">click to browse</span>
+                        </p>
+                        <p class="upload-hint">
+                            JPG, PNG, or GIF • Max 16MB • Face should be clearly visible
+                        </p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+
+                <div class="upload-preview" id="uploadPreview" style="display: none;">
+                    <img id="previewImage" alt="Uploaded image preview">
+                    <div class="preview-info">
+                        <p class="preview-status" id="previewStatus"></p>
+                        <button class="btn btn-secondary" id="changeImageBtn">
+                            <i class="fas fa-sync-alt"></i> Change Image
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2: Choose Template -->
+            <section class="template-section" id="templateSection" style="display: none;">
+                <div class="step-header">
+                    <span class="step-number">2</span>
+                    <h2>Choose a Wojak Template</h2>
+                </div>
+
+                <div class="template-grid" id="templateGrid">
+                    <!-- Templates will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Step 3: Customize -->
+            <section class="customize-section" id="customizeSection" style="display: none;">
+                <div class="step-header">
+                    <span class="step-number">3</span>
+                    <h2>Customize Your Wojak</h2>
+                </div>
+
+                <div class="customize-controls">
+                    <div class="control-group">
+                        <label for="faceBlendStrength">Face Blend Strength</label>
+                        <input type="range" id="faceBlendStrength" min="0" max="1" step="0.1" value="0.6">
+                        <span class="range-value">0.6</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="eyeBlendStrength">Eye Blend Strength</label>
+                        <input type="range" id="eyeBlendStrength" min="0" max="1" step="0.1" value="0.8">
+                        <span class="range-value">0.8</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="mouthBlendStrength">Mouth Blend Strength</label>
+                        <input type="range" id="mouthBlendStrength" min="0" max="1" step="0.1" value="0.7">
+                        <span class="range-value">0.7</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="colorMatchStrength">Color Matching</label>
+                        <input type="range" id="colorMatchStrength" min="0" max="1" step="0.1" value="0.4">
+                        <span class="range-value">0.4</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-large" id="generateBtn">
+                    <i class="fas fa-magic"></i>
+                    Generate Wojak
+                </button>
+            </section>
+
+            <!-- Step 4: Result -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <div class="step-header">
+                    <span class="step-number">4</span>
+                    <h2>Your Wojak is Ready!</h2>
+                </div>
+
+                <div class="result-container">
+                    <div class="result-image-container">
+                        <img id="resultImage" alt="Generated Wojak">
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button class="btn btn-primary" id="downloadBtn">
+                            <i class="fas fa-download"></i>
+                            Download
+                        </button>
+                        <button class="btn btn-secondary" id="newWojakBtn">
+                            <i class="fas fa-plus"></i>
+                            Create Another
+                        </button>
+                        <button class="btn btn-secondary" id="shareBtn">
+                            <i class="fas fa-share"></i>
+                            Share
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <p class="loading-text" id="loadingText">Processing your image...</p>
+            </div>
+        </div>
+
+        <!-- Error Messages -->
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="errorText"></span>
+                <button class="error-close" id="errorClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Wojak Generator. Made with ❤️ for meme enthusiasts.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
