@@ -9,7 +9,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="wojak-generator",
     version="1.0.0",
-    author="Wojak Generator Team",
+    author="Jayabrota Banerjee",
     description="An AI-based tool that transforms your images into custom Wojak memes",
     long_description=long_description,
     long_description_content_type="text/markdown",
